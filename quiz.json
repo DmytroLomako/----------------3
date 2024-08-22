@@ -1,0 +1,19 @@
+{
+    "questions": [
+        {
+            "question": "Якою мовою програмування написаний цей бот?",
+            "answers": ["Python", "Java", "C++", "JavaScript"],
+            "correct_id": 0
+        },
+        {
+            "question": "Який метод використовується для запуску бота в Aiogram?",
+            "answers": ["send_poll", "start_polling", "launch_poll", "poll"],
+            "correct_id": 1
+        },
+        {
+            "question": "Який модуль використовується для створення цього бота?",
+            "answers": ["aiogram", "telebot", "flask", "django"],
+            "correct_id": 0
+        }
+    ]
+}
