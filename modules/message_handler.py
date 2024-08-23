@@ -1,5 +1,5 @@
-from .settings import Session, bot, dispatcher, id_admin
-from .modules import *
+from .settings import Session, bot, dispatcher, id_admin, answers_dict
+from .modeles import *
 from aiogram import filters
 from .ask_question import send_question
 
@@ -23,6 +23,7 @@ async def start_quiz(message):
         await message.answer('У вас немає дозволу на проведення тесту')
         return False
     all_users = session.query(Users).all()
+    answers_dict['question_0'] = {}
     print(all_users)
     for user in all_users:
         await send_question(user, 0)

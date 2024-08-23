@@ -13,6 +13,7 @@ class Results(Base):
     id = Column(Integer, primary_key = True)
     score = Column(Integer)
     user_id = Column(Integer, ForeignKey('users.id'))
+    quiz_id = Column(Integer)
     user = relationship('Users', back_populates = 'results')
     def __repr__(self):
         return f"Results(id={self.id}, score={self.score}, user_id={self.user_id})"
