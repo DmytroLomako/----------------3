@@ -1,0 +1,19 @@
+{
+    "questions": [
+        {
+            "question": "test",
+            "answers": ["Python", "Java", "C++", "JavaScript"],
+            "correct_id": 0
+        },
+        {
+            "question": "test",
+            "answers": ["send_poll", "start_polling", "launch_poll", "poll"],
+            "correct_id": 1
+        },
+        {
+            "question": "test",
+            "answers": ["aiogram", "telebot", "flask", "django"],
+            "correct_id": 0
+        }
+    ]
+}

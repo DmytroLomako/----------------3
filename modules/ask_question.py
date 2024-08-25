@@ -3,7 +3,7 @@ import os
 import aiogram
 from .settings import bot
 
-path_to_json = os.path.abspath(__file__ + '/../../quiz.json')
+path_to_json = os.path.abspath(__file__ + '/../../quizes/quiz.json')
 with open(path_to_json, 'r') as file:
     questions = json.load(file)['questions']
     
