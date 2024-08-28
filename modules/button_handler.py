@@ -4,7 +4,9 @@ from .modeles import Users, Results
 from .ask_question import send_question
 import modules.ask_question as ask_question
 import json, os
+from .message_handler import list_answers_one
 
+dict = {}
 @dispatcher.callback_query()
 async def enter_answer(callback: types.CallbackQuery):
     if 'start_quiz' in callback.data:
@@ -32,10 +34,14 @@ async def enter_answer(callback: types.CallbackQuery):
             answers_dict[f'question_{question_id}'][f'user_{user.id}'] = True
         else:
             answers_dict[f'question_{question_id}'][f'user_{user.id}'] = False
+        answer_id = int(callback.data.split('_')[-1])
+        print(answer_id, 1)
+        await send_question(user, question_id, answer_id, callback.message.message_id)
         count_answers = len(answers_dict[f'question_{question_id}'])
         count_questions = len(ask_question.questions)
         if count_answers == count_users:
             if question_id + 1 == count_questions:
+                await bot.delete_message(callback.from_user.id, callback.message.message_id)
                 string_to_admin = 'Результати:\n\n'
                 average_score = 0
                 quiz_id = 1
@@ -59,5 +65,7 @@ async def enter_answer(callback: types.CallbackQuery):
             else:
                 answers_dict[f'question_{question_id + 1}'] = {}
                 for user in all_users:
-                    await send_question(user, question_id + 1)
+                    answer_id = 5
+                    question_id = int(callback.data.split('_')[-2])
+                    await send_question(user, question_id + 1, answer_id, callback.message.message_id)
     
