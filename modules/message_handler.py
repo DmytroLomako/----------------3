@@ -22,7 +22,7 @@ async def start_command(message):
         user = Users(full_name = message.from_user.first_name, telegram_id = telegram_id)
         session.add(user)
         session.commit()
-        await message.answer(f"Ви успішно зареєстрованя, чекайте на запуск тесту")
+        await message.answer(f"Ви успішно зареєстровані, чекайте на запуск тесту")
     else:
         await message.answer('Ви вже авторизовані')
     session.close()
@@ -80,7 +80,7 @@ async def my_result(message):
         for i in all_results:
             awarage_score += i.score
         awarage_score /= len(all_results)
-        string += f'У {result.quiz_id} тесті ви набрали - {result.score} бали, середній результат - {awarage_score}\n'
+        string += f'У {result.quiz_id} тесті ви набрали - {result.score} бали, середній результат - {round(awarage_score, 2)}\n'
     await message.answer(string)
 @dispatcher.message()
 async def get_file(message: types.Message):
