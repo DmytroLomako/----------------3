@@ -8,10 +8,10 @@ from .message_handler import list_answers_one
 
 dict_message_id = {}
 message_id_result = None
-list_message_id_result = []
+dict_message_id_result = {}
 @dispatcher.callback_query()
 async def enter_answer(callback: types.CallbackQuery):
-    global test_name, message_id_result, list_message_id_result
+    global test_name, message_id_result, dict_message_id_result
     if 'start_quiz' in callback.data:
         session = Session()
         all_users = session.query(Users).all()
@@ -23,9 +23,10 @@ async def enter_answer(callback: types.CallbackQuery):
         for user in all_users:
             dict_message_id[user.id] = await send_question(user, 0)
             if message_id_result != None:
-                for i in list_message_id_result:
-                    await bot.delete_message(user.telegram_id, i)
-                list_message_id_result.clear()
+                for i in dict_message_id_result.keys():
+                    user_tg_id = dict_message_id_result[i]
+                    await bot.delete_message(user_tg_id, i)
+                dict_message_id_result.clear()
     elif 'delete_quiz' in callback.data:
         file_name = callback.data.split('%')[-1]
         path_to_file = os.path.abspath(__file__ + f'/../../quizes/{file_name}')
@@ -84,7 +85,7 @@ async def enter_answer(callback: types.CallbackQuery):
                         keyboard = types.InlineKeyboardMarkup(inline_keyboard = [[list_buttons2[0], list_buttons2[1]],[list_buttons2[2], list_buttons2[3]]])
                         message_id_result = await bot.send_message(user.telegram_id, correct_question, reply_markup = keyboard)
                         message_id_result = message_id_result.message_id
-                        list_message_id_result.append(message_id_result)
+                        dict_message_id_result[message_id_result] = user.telegram_id
                         if answers_dict[f'question_{i}'][f'user_{user.id}'] == True:
                             string_result += f'Ваша відповідь на {i} питання - {correct_answer[correct_id]} ✅\n'
                         else:
